@@ -1,56 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>AI Learning Hub</title>
+  <title>توجيهي AI</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>🧠 AI Learning Hub</h1>
+<div class="container">
 
-<div class="nav">
-  <button onclick="show('study')">Study</button>
-  <button onclick="show('solve')">Solve</button>
-  <button onclick="show('practice')">Practice</button>
-  <button onclick="show('quiz')">Quiz</button>
-  <button onclick="show('progress')">Progress</button>
-</div>
+  <h1>🧠 توجيهي AI - مساعدك الذكي</h1>
 
-<!-- STUDY -->
-<div id="study" class="section">
-  <h2>AI Study Assistant</h2>
-  <textarea id="studyInput" placeholder="Ask a topic..."></textarea>
-  <button onclick="fakeAI('studyInput','studyOut')">Explain</button>
-  <div id="studyOut"></div>
-</div>
+  <p class="sub">اشرح، حل، وتعلم بطريقة بسيطة وسريعة</p>
 
-<!-- SOLVE -->
-<div id="solve" class="section hidden">
-  <h2>AI Solver</h2>
-  <textarea id="solveInput" placeholder="Enter math question"></textarea>
-  <button onclick="fakeAI('solveInput','solveOut')">Solve</button>
-  <div id="solveOut"></div>
-</div>
+  <textarea id="input" placeholder="اكتب سؤالك هنا..."></textarea>
 
-<!-- PRACTICE -->
-<div id="practice" class="section hidden">
-  <h2>Practice Questions</h2>
-  <div id="practiceBox"></div>
-</div>
+  <button onclick="solve()">🚀 حل / شرح</button>
 
-<!-- QUIZ -->
-<div id="quiz" class="section hidden">
-  <h2>Quiz</h2>
-  <div id="quizBox"></div>
-  <button onclick="checkQuiz()">Submit</button>
-  <h3 id="score"></h3>
-</div>
+  <div id="output"></div>
 
-<!-- PROGRESS -->
-<div id="progress" class="section hidden">
-  <h2>Progress</h2>
-  <p id="progressText">0 tasks completed</p>
+  <hr>
+
+  <h2>📚 أسئلة تدريب</h2>
+
+  <div class="card">
+    <p>حل: x² + 5x + 6 = 0</p>
+    <button onclick="fill('حل: x² + 5x + 6 = 0')">جرّب مع AI</button>
+  </div>
+
+  <div class="card">
+    <p>بسط: 3/4 + 2/5</p>
+    <button onclick="fill('بسط: 3/4 + 2/5')">جرّب مع AI</button>
+  </div>
+
 </div>
 
 <script src="script.js"></script>
