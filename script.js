@@ -1,69 +1,78 @@
-async function solveMath(){
 
-  const question = document.getElementById("question").value;
+// NAVIGATION
+function show(id){
 
-  const answerBox = document.getElementById("answer");
+  document.querySelectorAll(".section")
+  .forEach(s => s.classList.add("hidden"));
 
-  const loading = document.getElementById("loading");
+  document.getElementById(id)
+  .classList.remove("hidden");
+}
 
-  if(!question){
+// SIMPLE AI (placeholder)
+function fakeAI(inputId, outputId){
 
-    answerBox.innerHTML = "Please enter a math question.";
+  const text = document.getElementById(inputId).value;
 
-    return;
-  }
+  document.getElementById(outputId).innerHTML =
+    "🧠 Explanation for: " + text +
+    "<br><br>Step 1: Understand the problem<br>Step 2: Solve step by step";
 
-  loading.classList.remove("hidden");
+  addProgress();
+}
 
-  answerBox.innerHTML = "";
+// LOAD QUESTIONS
+fetch("questions.json")
+.then(r => r.json())
+.then(data => {
 
-  try{
+  const box = document.getElementById("practiceBox");
+  const quiz = document.getElementById("quizBox");
 
-    const response = await fetch(
-      "https://api.openai.com/v1/chat/completions",
-      {
-        method:"POST",
+  data.forEach((q,i) => {
 
-        headers:{
-          "Content-Type":"application/json",
+    // Practice
+    const p = document.createElement("div");
+    p.innerHTML = `
+      <p>${q.q}</p>
+      <button onclick="alert('${q.a}')">Answer</button>
+    `;
+    box.appendChild(p);
 
-          "Authorization":"Bearer YOUR_OPENAI_API_KEY"
-        },
+    // Quiz
+    const qz = document.createElement("div");
+    qz.innerHTML = `
+      <p>${q.q}</p>
+      <input id="q${i}" placeholder="answer">
+    `;
+    quiz.appendChild(qz);
 
-        body:JSON.stringify({
+  });
 
-          model:"gpt-4.1-mini",
+});
 
-          messages:[
-            {
-              role:"system",
+// QUIZ CHECK
+function checkQuiz(){
 
-              content:
-              "You are a professional math tutor. Solve math problems step by step."
-            },
+  let inputs = document.querySelectorAll("input");
 
-            {
-              role:"user",
+  let score = 0;
 
-              content:question
-            }
-          ]
-        })
-      }
-    );
+  inputs.forEach(i => {
+    if(i.value.trim() !== "") score++;
+  });
 
-    const data = await response.json();
+  document.getElementById("score").innerText =
+    "Score: " + score + "/" + inputs.length;
 
-    loading.classList.add("hidden");
+  addProgress();
+}
 
-    answerBox.innerHTML =
-      data.choices[0].message.content;
+// PROGRESS
+let progress = 0;
 
-  }catch(error){
-
-    loading.classList.add("hidden");
-
-    answerBox.innerHTML =
-      "Error connecting to AI.";
-  }
+function addProgress(){
+  progress++;
+  document.getElementById("progressText")
+  .innerText = progress + " tasks completed";
 }
